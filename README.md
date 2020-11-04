@@ -5,8 +5,8 @@ This is a videos API.
 
 
 ### Prerequisites
-- npm 6.14.5
-- node 14.3.0
+- npm 6.14.8
+- node 14.10.1
 
 ### Setup
 
