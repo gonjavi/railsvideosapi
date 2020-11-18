@@ -2,12 +2,21 @@ module Api
   module V1
     class VideosController < ApplicationController
       protect_from_forgery with: :null_session
-      before_action :set_video, only: %i[destroy update]
+      before_action :set_video, only: %i[destroy update show]
 
       def index
         video = Video.all
 
         render json: VideoSerializer.new(video).serialized_json
+      end
+
+      def show
+        video = Video.new
+        if @video 
+          render json: VideoSerializer.new(@video).serialized_json
+        else
+          render json: { error: video.errors.messages }, status: 404
+        end
       end
 
       def create
@@ -21,6 +30,7 @@ module Api
       end
 
       def update
+        video = Video.new
         if @video.update(video_params)
           render json: VideoSerializer.new(@video).serialized_json
         else
@@ -36,7 +46,11 @@ module Api
       private
 
       def set_video
-        @video = Video.find(params[:id])
+        begin
+           @video = Video.find(params[:id])
+        rescue ActiveRecord::RecordNotFound => e
+          @video = nil
+        end
       end
 
       def video_params
