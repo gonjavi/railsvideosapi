@@ -1,6 +1,6 @@
 # Rails Videos API
 
-This is a videos API.
+This is an API with CRUD actions to save youtube video links and its information.
 
 
 ### Prerequisites
